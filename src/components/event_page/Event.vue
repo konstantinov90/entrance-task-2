@@ -1,0 +1,249 @@
+<template>
+<div style="position:relative">
+<div class="event">
+  <app-header></app-header>
+  <div class="event__body_vertical_flex">
+    <div class="event__header font-bold">
+      <p>{{this.id? "Редактирование встречи": "Новая встреча"}}</p>
+      <router-link to="/" tag="div" class="event__close event__element_hide"></router-link>
+    </div>
+    <div class="event__body">
+      <div class="event__body_horizontal_flex">
+        <event-topic-input></event-topic-input>
+        <p style="min-width: 32px"></p>
+        <event-datetime-input></event-datetime-input>
+      </div>
+      <div class="event__body_horizontal_flex">
+        <event-users-input></event-users-input>
+        <p style="min-width: 32px"></p>
+        <event-room-input></event-room-input>
+      </div>
+    </div>
+    <div class="event__footer__delete event__footer__delete_additional font-medium" v-if="id" @click="confirmDelete">Удалить встречу</div>
+  </div>
+</div>
+<div class="event__footer">
+  <div class="event__footer__buttons font-medium">
+    <router-link to="/" tag="div" class="event__footer__button event__footer__cancel">Отмена</router-link>
+    <div class="event__footer__button event__footer__save" :class="eventSaveBtnClass" v-if="!id" @mousedown="createEvent">Создать встречу</div>
+    <div class="event__footer__button event__footer__delete event__element_hide" v-if="id" @click="confirmDelete">Удалить встречу</div>
+    <div class="event__footer__button event__footer__save" :class="eventSaveBtnClass" v-if="id">Сохранить</div>
+  </div>
+</div>
+<event-delete-modal v-if="showEventDeleteModal"></event-delete-modal>
+</div>
+</template>
+
+<script>
+import AppHeader from '../common/AppHeader.vue';
+import Datepicker from 'vuejs-datepicker';
+import ru from 'date-fns/locale/ru';
+import { format, addHours, startOfHour } from 'date-fns';
+// import gql from 'graphql-tag';
+import EventTopicInput from './EventTopicInput.vue';
+import EventDatetimeInput from './EventDatetimeInput.vue';
+import EventUsersInput from './EventUsersInput.vue';
+import EventRoomInput from './EventRoomInput.vue';
+import EventDeleteModal from './EventDeleteModal.vue';
+
+import { events } from '../../store/mock_data.js';
+
+export default {
+  name: 'event',
+  components: {
+    AppHeader,
+    Datepicker,
+    EventTopicInput,
+    EventDatetimeInput,
+    EventUsersInput,
+    EventRoomInput,
+    EventDeleteModal,
+  },
+  // apollo: {
+  //   event: {
+  //     query: gql`
+  //       query Event($id: ID!) {
+  //         event(id: $id) {
+  //           id
+  //           title
+  //           dateEnd
+  //           dateStart
+  //           room {
+  //             id
+  //           }
+  //           users {
+  //             id
+  //           }
+  //         }
+  //       }
+  //     `,
+  //     variables() {
+  //       return {
+  //         id: this.id || '',
+  //       };
+  //     },
+  //     result({ event }) {
+  //       this.$store.commit('eventEdit', event);
+  //       return event;
+  //     },
+  //   },
+  // },
+  created() {
+    this.$store.commit('eventEdit', this.event);
+  },
+  methods: {
+    createEvent(e) {
+      if (this.isReady) {
+        this.$store.commit('toggleEventCreated');
+        this.$router.push('/');
+      }
+    },
+    confirmDelete() {
+      this.$store.commit('toggleEventDeleteConfirm');
+    },
+  },
+  computed: {
+    event() {
+      return this.id ? events.filter(e => e.id === this.id)[0] : null;
+    },
+    showEventDeleteModal() {
+      return this.$store.getters.getEventDeleteConfirm;
+    },
+    id() {
+      console.log(this.$route.query.id);
+      return this.$route.query.id;
+    },
+    eventSaveBtnClass() {
+      return {
+        event__footer__save_disabled: !this.isReady,
+      };
+    },
+    isReady() {
+      const gtrs = this.$store.getters;
+      return (
+        gtrs.getEventEditTitle &&
+        gtrs.getEventEditDateStart &&
+        gtrs.getEventEditDateEnd &&
+        gtrs.getEventEditRoomId &&
+        gtrs.getEventEditSelectedUsers.length
+      );
+    },
+  },
+};
+</script>
+
+<style>
+.event {
+  position: relative;
+  height: calc(100vh - 80px);
+  overflow-y: auto;
+}
+.event__body_vertical_flex {
+  max-width: 872px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+.event__body_horizontal_flex {
+  display: flex;
+  justify-content: space-between;
+}
+.event__header {
+  padding: 0 20px;
+  font-size: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+.event__body {
+  padding: 0 20px;
+  font-size: 13px;
+}
+.event__close {
+  width: 24px;
+  height: 24px;
+  background: url(/assets/close.svg) #e9ecef no-repeat center;
+  border-radius: 100px;
+  margin: auto 0;
+  cursor: pointer;
+}
+.event__close:hover {
+  background-color: #d5dfe9;
+}
+.event__footer {
+  position: fixed;
+  bottom: 0;
+  box-shadow: 0 -1px 0 0 #e9ecef;
+  width: 100%;
+  height: 76px;
+  display: flex;
+  justify-content: center;
+}
+.event__footer__buttons {
+  display: flex;
+  justify-content: center;
+}
+.event__footer__button {
+  padding: 10px 16px;
+  cursor: pointer;
+  font-size: 13px;
+  margin: auto 8px;
+  background: #e9ecef;
+  border-radius: 4px;
+}
+.event__footer__button:active {
+  background: #dde0e4;
+}
+.event__footer__save {
+  background: #007dff;
+  color: white;
+}
+.event__footer__save:hover {
+  background: #0059ff;
+}
+.event__footer__save:active {
+  background: rgba(11, 0, 255, 0.8);
+}
+.event__footer__delete_additional {
+  display: none;
+  cursor: pointer;
+}
+.event__footer__save_disabled {
+  background: #e9ecef;
+  color: rgba(0, 0, 0, 0.2);
+  cursor: default;
+}
+.event__footer__save_disabled:hover {
+  background: #e9ecef;
+}
+.event__footer__save_disabled:active {
+  background: #e9ecef;
+}
+@media (max-width: 800px) {
+  .event__body {
+    padding: 0;
+  }
+  .event__element_hide {
+    display: none;
+  }
+  .event__body_horizontal_flex {
+    display: block;
+  }
+  .event__footer {
+    height: 80px;
+  }
+  .event__footer__button {
+    font-size: 15px;
+  }
+  .event__footer__delete {
+    font-size: 15px;
+    border-top: 8px solid #e9ecef;
+    border-bottom: 8px solid #e9ecef;
+    padding: 16px 0 20px;
+    text-align: center;
+    color: #ff3333;
+  }
+  .event__footer__delete_additional {
+    display: block;
+  }
+}
+</style>

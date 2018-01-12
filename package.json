@@ -1,0 +1,44 @@
+{
+  "name": "entrance-task-2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "apollo-cache-inmemory": "^1.1.5",
+    "apollo-client": "^2.2.0",
+    "apollo-link": "^1.0.7",
+    "apollo-link-http": "^1.3.2",
+    "babel-polyfill": "^6.26.0",
+    "date-fns": "^1.29.0",
+    "es6-map": "^0.1.5",
+    "faker": "^4.1.0",
+    "graphql": "^0.12.3",
+    "graphql-tag": "^2.6.1",
+    "seedrandom": "^2.4.3",
+    "unfetch": "^3.0.0",
+    "vue": "^2.5.13",
+    "vue-apollo": "^3.0.0-alpha.2",
+    "vue-router": "^3.0.1",
+    "vuejs-datepicker": "^0.9.22",
+    "vuex": "^3.0.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "css-loader": "^0.28.8",
+    "uglifyjs-webpack-plugin": "^1.1.6",
+    "vue-loader": "^13.6.2",
+    "vue-template-compiler": "^2.5.13",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.10.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack-dev-server --hot --open",
+    "build": "webpack"
+  },
+  "author": "",
+  "license": "ISC"
+}
