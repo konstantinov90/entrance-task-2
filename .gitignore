@@ -1,4 +1,7 @@
 node_modules
 assets
 src
-./*
+.babelrc
+.prettierrc.json
+index.html
+webpack.config.js
