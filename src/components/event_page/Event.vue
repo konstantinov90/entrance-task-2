@@ -252,12 +252,6 @@ export default {
   .event__footer__delete_additional {
     display: block;
   }
-
-  .calendar__select {
-    width: 100%;
-    left: 0;
-    margin-left: 0;
-  }
 }
 @media screen and (-webkit-min-device-pixel-ratio: 2) {
   /* webkit specific CSS */
