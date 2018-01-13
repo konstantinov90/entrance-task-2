@@ -39,7 +39,7 @@
     "dev": "webpack-dev-server --hot --open",
     "build": "webpack",
     "build_pub": "set NODE_ENV=publish && npm run build",
-    "pub": "npm run build_pub && git add dist && git commit -m \"publish fix\" && git push origin gh-pages"
+    "pub": "git add dist && git commit -m \"publish fix\" && git push origin gh-pages"
   },
   "author": "",
   "license": "ISC"
