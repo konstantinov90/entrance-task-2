@@ -125,7 +125,8 @@ export default {
       return ` и ${users.length} участников`;
     },
     linkURL() {
-      return `/event/?id=${this.event.id}`;
+      return { name: 'event', query: { id: this.event.id } };
+      // return `/event/?id=${this.event.id}`;
     },
     tailStyle() {
       const { x } = this.tooltipBaseCoord;

@@ -25,7 +25,7 @@
 <script>
 // import gql from 'graphql-tag';
 import AppHeader from '../common/AppHeader.vue';
-import Calendar from './Calendar.vue';
+import Calendar from '../common/calendar/Calendar.vue';
 import Room from './Room.vue';
 import EventsHead from './EventsHead.vue';
 import Grid from './Grid.vue';
@@ -100,6 +100,9 @@ export default {
 </script>
  
 <style>
+.app {
+  overflow: hidden;
+}
 .events {
   overflow-x: hidden;
   overflow-y: hidden;
@@ -130,6 +133,7 @@ export default {
   pointer-events: none;
   position: absolute;
   top: 46px;
+  left: 0px;
   z-index: 5;
 }
 @media (max-width: 800px) {
@@ -146,6 +150,7 @@ export default {
     -o-transition: margin-left 0.5s;
     -ms-transition: margin-left 0.5s;
     overflow-x: visible;
+    -webkit-overflow-scrolling: touch;
     min-width: calc(100% - 161px);
   }
   .events__head__wrapper,

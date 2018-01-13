@@ -37,37 +37,10 @@ export default {
 };
 </script>
 
-<style>
-.calendar {
-  display: flex;
-  padding: 0px 14px 0 24px;
-  height: 46px;
-  align-items: center;
-  border-bottom: 1px solid #e9ecef;
-  justify-content: space-between;
-  max-width: 207px;
-  flex-basis: 207px;
-  flex: 1;
-}
-.calendar__input {
-  max-width: 149px;
-  min-width: 120px;
-  cursor: pointer;
-}
-.calendar__input input {
-  font-size: 15px;
-  font-family: inherit;
-  border: none;
-  text-align: center;
-  line-height: 24px;
-  width: 100%;
-  cursor: pointer;
-}
-@media (max-width: 800px) {
-  .calendar {
-    width: 100%;
-    height: 56px;
-    max-width: unset;
-  }
-}
+<style src="./calendar.css">
+
+</style>
+
+<style src="./calendar__select.css">
+
 </style>

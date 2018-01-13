@@ -1,7 +1,7 @@
 <template>
 <div class="header">
     <div class="header__logo"></div>
-    <router-link to="/event/" tag='div' class="header__btn font-medium" v-if="$route.fullPath === '/'">Создать встречу</router-link>
+    <router-link :to="{ name: 'event' }" tag='div' class="header__btn font-medium" v-if="$route.name === '/'">Создать встречу</router-link>
 </div>
 </template>
 
@@ -23,6 +23,10 @@ export default {
 .font-bold {
   font-family: HelveticaNeue, 'Open Sans', Helvetica, Arial, sans-serif;
   font-weight: 700;
+}
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-appearance: none;
 }
 body {
   margin: 0;
@@ -58,40 +62,6 @@ body {
 .header__btn:active {
   background: rgba(11, 0, 255, 0.8);
 }
-.calendar__select {
-  box-shadow: 0 1px 8px 0 rgba(0, 44, 92, 0.28);
-  border-radius: 4px;
-  left: -24px;
-  padding: 16px;
-  font-size: 15px;
-}
-.calendar__select .selected {
-  background: #007dff !important;
-  color: white;
-}
-.calendar__select .day,
-.calendar__select > header > span {
-  border-radius: 2px;
-}
-.calendar__select > header > span:hover {
-  background: url(/assets/arrow.svg) no-repeat center #e9ecef !important;
-}
-.calendar__select > header > .prev::after,
-.calendar__select > header > .next::after {
-  content: none !important;
-}
-.calendar__select > header > .prev {
-  background: url(/assets/arrow.svg) no-repeat center;
-  transform: rotate(180deg);
-}
-.calendar__select > header > .next {
-  background: url(/assets/arrow.svg) no-repeat center;
-}
-.calendar__select .day:hover {
-  background-color: #e9ecef !important;
-  border: 1px solid #e9ecef !important;
-  color: black;
-}
 @media (max-width: 800px) {
   .header__btn {
     display: none;
@@ -104,11 +74,6 @@ body {
   }
   .header {
     height: 48px;
-  }
-  .calendar__select {
-    position: fixed !important;
-    width: 100% !important;
-    left: 0;
   }
 }
 </style>

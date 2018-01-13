@@ -18,7 +18,13 @@ Vue.use(Vuex);
 Vue.use(VueRouter);
 // Vue.use(VueApollo);
 
-const routes = [{ path: '/', component: App }, { path: '/event/:eventId?', component: Event }];
+const routes =
+  PROD_MODE === 'publish'
+    ? [
+        { path: '/entrance-task-2/dist/', name: '/', component: App },
+        { path: '/entrance-task-2/dist/event.html', name: 'event', component: Event },
+      ]
+    : [{ path: '/', name: '/', component: App }, { path: '/event/', name: 'event', component: Event }];
 
 const router = new VueRouter({
   mode: 'history',

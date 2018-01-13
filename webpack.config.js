@@ -1,5 +1,8 @@
 const path = require('path');
+const process = require('process');
+const webpack = require('webpack');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin'); // плагин минимизации
+console.log(process.env.NODE_ENV);
 
 module.exports = {
   entry: './src/main.js',
@@ -33,7 +36,11 @@ module.exports = {
       },
     ],
   },
-  plugins: [new UglifyJSPlugin()],
+  plugins: [
+    new webpack.DefinePlugin({
+      PROD_MODE: JSON.stringify((process.env.NODE_ENV || '').trim()),
+    }),
+  ].concat(process.env.NODE_ENV ? new UglifyJSPlugin() : []),
   resolve: {
     alias: {
       vue$: 'vue/dist/vue.esm.js', // 'vue/dist/vue.common.js' for webpack 1

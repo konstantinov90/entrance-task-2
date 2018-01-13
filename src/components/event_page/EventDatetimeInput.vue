@@ -127,6 +127,10 @@ export default {
 };
 </script>
 
+<style src="../common/calendar/calendar__select.css">
+
+</style>
+
 <style>
 .event_datetime_input {
   width: 100%;

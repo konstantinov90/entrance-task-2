@@ -102,11 +102,12 @@ export default {
   margin: 0 0 4px 0;
 }
 .event_users_input__user_list {
-  max-height: 136px;
+  max-height: 20vh;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   box-shadow: 0 1px 10px 0 rgba(0, 44, 92, 0.28);
   position: absolute;
-  width: inherit;
+  width: calc(100% - 2px);
   background: white;
   z-index: 2;
 }

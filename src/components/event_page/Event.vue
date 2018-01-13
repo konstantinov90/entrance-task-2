@@ -5,7 +5,7 @@
   <div class="event__body_vertical_flex">
     <div class="event__header font-bold">
       <p>{{this.id? "Редактирование встречи": "Новая встреча"}}</p>
-      <router-link to="/" tag="div" class="event__close event__element_hide"></router-link>
+      <router-link :to="{ name: '/' }" tag="div" class="event__close event__element_hide"></router-link>
     </div>
     <div class="event__body">
       <div class="event__body_horizontal_flex">
@@ -24,13 +24,14 @@
 </div>
 <div class="event__footer">
   <div class="event__footer__buttons font-medium">
-    <router-link to="/" tag="div" class="event__footer__button event__footer__cancel">Отмена</router-link>
+    <router-link :to="{ name: '/' }" tag="div" class="event__footer__button event__footer__cancel">Отмена</router-link>
     <div class="event__footer__button event__footer__save" :class="eventSaveBtnClass" v-if="!id" @mousedown="createEvent">Создать встречу</div>
     <div class="event__footer__button event__footer__delete event__element_hide" v-if="id" @click="confirmDelete">Удалить встречу</div>
     <div class="event__footer__button event__footer__save" :class="eventSaveBtnClass" v-if="id">Сохранить</div>
   </div>
 </div>
 <event-delete-modal v-if="showEventDeleteModal"></event-delete-modal>
+<!-- <calendar :v-if="false"></calendar> -->
 </div>
 </template>
 
@@ -39,7 +40,6 @@ import AppHeader from '../common/AppHeader.vue';
 import Datepicker from 'vuejs-datepicker';
 import ru from 'date-fns/locale/ru';
 import { format, addHours, startOfHour } from 'date-fns';
-// import gql from 'graphql-tag';
 import EventTopicInput from './EventTopicInput.vue';
 import EventDatetimeInput from './EventDatetimeInput.vue';
 import EventUsersInput from './EventUsersInput.vue';
@@ -95,7 +95,7 @@ export default {
     createEvent(e) {
       if (this.isReady) {
         this.$store.commit('toggleEventCreated');
-        this.$router.push('/');
+        this.$router.push({ name: '/' });
       }
     },
     confirmDelete() {
@@ -110,7 +110,6 @@ export default {
       return this.$store.getters.getEventDeleteConfirm;
     },
     id() {
-      console.log(this.$route.query.id);
       return this.$route.query.id;
     },
     eventSaveBtnClass() {
@@ -137,6 +136,8 @@ export default {
   position: relative;
   height: calc(100vh - 80px);
   overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 .event__body_vertical_flex {
   max-width: 872px;
@@ -172,6 +173,8 @@ export default {
 .event__footer {
   position: fixed;
   bottom: 0;
+  left: 0;
+  background: white;
   box-shadow: 0 -1px 0 0 #e9ecef;
   width: 100%;
   height: 76px;
@@ -230,6 +233,10 @@ export default {
   }
   .event__footer {
     height: 80px;
+    bottom: 0;
+    position: -webpack-sticky;
+    position: sticky;
+    z-index: 999;
   }
   .event__footer__button {
     font-size: 15px;
@@ -244,6 +251,19 @@ export default {
   }
   .event__footer__delete_additional {
     display: block;
+  }
+
+  .calendar__select {
+    width: 100%;
+    left: 0;
+    margin-left: 0;
+  }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+  /* webkit specific CSS */
+  /* фикс для iphone (в частности iphone5), ибо тулбар safari входит в vh */
+  .event {
+    height: calc(100vh - 150px);
   }
 }
 </style>

@@ -109,6 +109,7 @@ export default {
 .event_room_input__reminder {
   display: none;
   position: sticky;
+  position: -webkit-sticky;
   bottom: 0;
   height: 43px;
   opacity: 0.93;

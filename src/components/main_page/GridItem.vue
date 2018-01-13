@@ -44,7 +44,10 @@ export default {
       return this.event.type === 'event';
     },
     linkURL() {
-      return `/event/?dateStart=${getTime(this.event.dateStart)}&dateEnd=${getTime(this.event.dateEnd)}`;
+      return {
+        name: 'event',
+        query: { dateStart: getTime(this.event.dateStart), dateEnd: getTime(this.event.dateEnd) },
+      };
     },
     duration() {
       return getTime(this.event.dateEnd) - getTime(this.event.dateStart);

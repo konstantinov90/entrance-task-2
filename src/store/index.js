@@ -68,8 +68,8 @@ const createStore = () =>
       setTooltipInfo(state, { tooltipBaseCoord, eventId }) {
         Vue.set(state, 'tooltipEventId', eventId);
         if (tooltipBaseCoord) {
-          const { x, y } = tooltipBaseCoord;
-          Vue.set(state, 'tooltipBaseCoord', { x, y });
+          const { pageX, pageY } = tooltipBaseCoord;
+          Vue.set(state, 'tooltipBaseCoord', { x: pageX, y: pageY });
         } else {
           Vue.set(state, 'tooltipBaseCoord', null);
         }
