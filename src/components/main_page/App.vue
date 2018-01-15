@@ -102,6 +102,7 @@ export default {
 <style>
 .app {
   overflow: hidden;
+  position: relative;
 }
 .events {
   overflow-x: hidden;
