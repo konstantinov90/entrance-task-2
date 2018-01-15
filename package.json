@@ -36,7 +36,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack-dev-server --hot --open",
+    "dev": "set NODE_ENV=development && webpack-dev-server --hot --open",
     "build": "webpack",
     "build_pub": "set NODE_ENV=publish && npm run build",
     "pub": "git add dist && git commit -m \"publish fix\" && git push origin gh-pages"
